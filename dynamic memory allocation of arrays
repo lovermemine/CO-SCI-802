@@ -1,0 +1,59 @@
+
+#include <iostream>
+#include <conio.h>
+#include <string>
+#include <iomanip>
+using namespace std;
+struct Client
+{
+	string id, name;
+};
+struct Session
+{
+	Client client;
+	double rate;
+	int hours;
+};
+int main()
+{
+	Client* cPtr = new Client[3];
+	Session* sPtr = new Session[5];
+	double charge;
+
+	cout << "Enter clients:\n";
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "\nEnter Client id: ";
+		getline(cin, (cPtr + i)->id);
+		cout << "\nEnter Client name: ";
+		getline(cin, (cPtr + i)->name);
+	}
+	cout << "\nSession:\n";
+	for (int i = 0; i < 5; i++)
+	{
+		cout << "\nEnter client id: ";
+		getline(cin, (sPtr + i)->client.id);
+		cout << "\nEnter client name: ";
+		getline(cin, (sPtr + i)->client.name);
+		cout << "\nEnter session rate: ";
+		cin >> (sPtr + i)->rate;
+		cout << "\nEnter session duration in hours: ";
+		cin >> (sPtr + i)->hours;
+		cin.ignore();
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		charge = 0.0;
+		cout << "\nCharges for client " << cPtr[i].id << " = ";
+		for (int j = 0; j < 5; j++)
+			if (sPtr[j].client.id == cPtr[i].id)
+				charge += sPtr[j].hours * sPtr[j].rate;
+		cout << '$' << charge;
+	}
+	delete[] cPtr;
+	delete[] sPtr;
+
+	cout << "\n\nPress any key to continue.";
+	_getch();
+	return 0;
+}
